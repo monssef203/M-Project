@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { ArrowRight, Check, ChevronDown, ChevronLeft, ChevronRight, Heart, Menu, Minus, PackageCheck, Plus, Search, ShieldCheck, ShoppingBag, Star, Truck, X } from 'lucide-react';
 import './styles.css';
 
+const BASE = import.meta.env.BASE_URL;
+
 const copy = {
   fr: {
     nav:['Nouveautés','Homme','Femme','Collections'], search:'Rechercher', account:'Compte', heroTag:'L’élégance, à chaque seconde', heroTitle:<>Le temps vous<br/><em>appartient.</em></>, heroText:'Des montres de caractère, sélectionnées pour celles et ceux qui savent que chaque détail compte.', shop:'Découvrir la collection', story:'Notre histoire', new:'NOUVELLE COLLECTION', curated:'Sélection du moment', curatedSub:'Des pièces intemporelles, pensées pour sublimer chaque instant.', all:'Tout voir', add:'Ajouter au panier', added:'Ajouté', promise:'La promesse Maison Temps', promiseText:'Une exigence absolue, du premier regard jusqu’à votre poignet.', delivery:'Livraison offerte', deliverySub:'Partout au Maroc dès 500 MAD', secure:'Paiement sécurisé', secureSub:'À la livraison ou par carte', quality:'Qualité garantie', qualitySub:'Chaque pièce vérifiée avec soin', support:'Service attentionné', supportSub:'Disponible 7j/7 sur WhatsApp', quote:'“Une montre ne donne pas seulement l’heure. Elle raconte la façon dont vous choisissez de la vivre.”', journal:'Le Journal', journalTitle:'L’art de choisir sa montre', journalText:'Taille du boîtier, mouvement, bracelet… Découvrez notre guide pour trouver la montre qui vous ressemble vraiment.', read:'Lire le guide', newsletter:'Entrez dans le cercle', newsletterText:'Avant-premières, conseils et histoires horlogères. Directement dans votre boîte mail.', email:'Votre adresse e-mail', join:'S’inscrire', cart:'Votre panier', empty:'Votre panier est vide', emptySub:'Découvrez notre sélection de montres intemporelles.', continue:'Continuer mes achats', subtotal:'Sous-total', checkout:'Commander', shipping:'Livraison offerte dès 500 MAD', language:'العربية', items:'articles', filters:['Tous','Homme','Femme'], footer:'Montres de caractère, livrées partout au Maroc.', success:'Merci ! Bienvenue dans le cercle Maison Temps.'
@@ -13,10 +15,10 @@ const copy = {
 };
 
 const products = [
- {id:1, name:'Nocturne Classique', ar:'نوكتورن كلاسيك', type:'Homme', price:849, old:999, img:'/watch-noir.png', badge:'Bestseller', desc:'Cadran noir · Cuir véritable'},
- {id:2, name:'Émeraude Signature', ar:'إمرود سيغنتشر', type:'Homme', price:1190, img:'/watch-vert.png', badge:'Nouveau', desc:'Acier inoxydable · 40 mm'},
- {id:3, name:'Rivage Bleu', ar:'ريفاج بلو', type:'Homme', price:1090, img:'/watch-bleu.png', desc:'Cadran bleu · Acier brossé'},
- {id:4, name:'Lumière Dorée', ar:'لوميير دوريه', type:'Femme', price:790, old:920, img:'/watch-or.png', desc:'Finition dorée · 30 mm'}
+ {id:1, name:'Nocturne Classique', ar:'نوكتورن كلاسيك', type:'Homme', price:849, old:999, img:`${BASE}watch-noir.png`, badge:'Bestseller', desc:'Cadran noir · Cuir véritable'},
+ {id:2, name:'Émeraude Signature', ar:'إمرود سيغنتشر', type:'Homme', price:1190, img:`${BASE}watch-vert.png`, badge:'Nouveau', desc:'Acier inoxydable · 40 mm'},
+ {id:3, name:'Rivage Bleu', ar:'ريفاج بلو', type:'Homme', price:1090, img:`${BASE}watch-bleu.png`, desc:'Cadran bleu · Acier brossé'},
+ {id:4, name:'Lumière Dorée', ar:'لوميير دوريه', type:'Femme', price:790, old:920, img:`${BASE}watch-or.png`, desc:'Finition dorée · 30 mm'}
 ];
 
 function App(){
@@ -41,7 +43,7 @@ function App(){
    <main>
     <section className="hero">
       <div className="hero-copy"><span className="eyebrow">{t.heroTag}</span><h1>{t.heroTitle}</h1><p>{t.heroText}</p><div className="hero-buttons"><button className="primary" onClick={scrollProducts}>{t.shop}<ArrowRight/></button><button className="link-btn">{t.story}<span>↗</span></button></div></div>
-      <div className="hero-image"><img src="/watch-bleu.png" alt="Montre Rivage Bleu"/><span className="vertical-note">CASABLANCA · MOROCCO · 2026</span><div className="hero-number">01 <i></i> 04</div></div>
+      <div className="hero-image"><img src={`${BASE}watch-bleu.png`} alt="Montre Rivage Bleu"/><span className="vertical-note">CASABLANCA · MOROCCO · 2026</span><div className="hero-number">01 <i></i> 04</div></div>
     </section>
 
     <section className="collection" id="collection"><div className="section-head"><div><span className="eyebrow">{t.new}</span><h2>{t.curated}</h2><p>{t.curatedSub}</p></div><button className="view-all" onClick={()=>setFilter('Tous')}>{t.all}<ArrowRight/></button></div>
@@ -50,8 +52,8 @@ function App(){
     </section>
 
     <section className="promise"><div className="center-head"><span className="eyebrow">MAISON TEMPS</span><h2>{t.promise}</h2><p>{t.promiseText}</p></div><div className="benefits"><Benefit icon={<Truck/>} title={t.delivery} text={t.deliverySub}/><Benefit icon={<ShieldCheck/>} title={t.secure} text={t.secureSub}/><Benefit icon={<Star/>} title={t.quality} text={t.qualitySub}/><Benefit icon={<PackageCheck/>} title={t.support} text={t.supportSub}/></div></section>
-    <section className="manifesto"><div className="manifesto-img"><img src="/watch-noir.png" alt="Maison Temps"/></div><div className="manifesto-copy"><span className="quote-mark">“</span><blockquote>{t.quote}</blockquote><span className="signature">— MAISON TEMPS</span></div></section>
-    <section className="journal"><div className="journal-card"><span className="eyebrow">{t.journal}</span><h2>{t.journalTitle}</h2><p>{t.journalText}</p><button className="link-btn">{t.read}<ArrowRight/></button></div><div className="journal-img"><img src="/watch-vert.png" alt="Guide montre"/><span>LE GUIDE<br/>MAISON TEMPS</span></div></section>
+    <section className="manifesto"><div className="manifesto-img"><img src={`${BASE}watch-noir.png`} alt="Maison Temps"/></div><div className="manifesto-copy"><span className="quote-mark">“</span><blockquote>{t.quote}</blockquote><span className="signature">— MAISON TEMPS</span></div></section>
+    <section className="journal"><div className="journal-card"><span className="eyebrow">{t.journal}</span><h2>{t.journalTitle}</h2><p>{t.journalText}</p><button className="link-btn">{t.read}<ArrowRight/></button></div><div className="journal-img"><img src={`${BASE}watch-vert.png`} alt="Guide montre"/><span>LE GUIDE<br/>MAISON TEMPS</span></div></section>
     <section className="newsletter"><span className="spark">✦</span><h2>{t.newsletter}</h2><p>{t.newsletterText}</p><form onSubmit={e=>{e.preventDefault();e.currentTarget.reset();alert(t.success)}}><input required type="email" placeholder={t.email}/><button>{t.join}<ArrowRight/></button></form></section>
    </main>
    <footer><a className="logo light" href="#">MAISON <i>✦</i> TEMPS<span>HORLOGERIE · CASABLANCA</span></a><p>{t.footer}</p><div><a href="#collection">Instagram</a><a href="#collection">Contact</a><a href="#collection">Livraison & retours</a></div><small>© 2026 Maison Temps. Tous droits réservés.</small></footer>
