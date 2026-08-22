@@ -1,0 +1,69 @@
+# GitHub Pages Deploy Workflow
+# -------------------------------------------------
+# This file is a COPY of the workflow that should live at:
+# .github/workflows/deploy.yml
+#
+# Due to GitHub App permission limits, the bot cannot push files
+# directly into .github/workflows/. You need to create the workflow
+# file manually via GitHub's web UI:
+#
+# 1. Go to https://github.com/monssef203/M-Project
+# 2. Click "Add file" -> "Create new file"
+# 3. Set path to: .github/workflows/deploy.yml
+# 4. Copy the content below (starting from "name: Deploy...") into the editor
+# 5. Commit directly to main or arena branch
+#
+# Then enable GitHub Pages with GitHub Actions:
+# Settings -> Pages -> Build and deployment -> Source: GitHub Actions
+#
+# -------------------------------------------------
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ "main", "arena/01a0299b-m-project" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
